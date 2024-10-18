@@ -23,9 +23,6 @@ const filterUsers = async (filter) => {
                 },
                 {
                     lastName: { $regex: filter, $options: "i" }
-                },
-                {
-                    email: { $regex: filter, $options: "i" }
                 }
             ]
         },

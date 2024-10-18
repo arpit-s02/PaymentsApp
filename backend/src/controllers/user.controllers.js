@@ -1,6 +1,7 @@
 import { createUser, filterUsers, getUserByEmail, updateUserInfo } from "../services/user.services.js";
 import { generateToken, hashPassword, verifyPassword } from "../services/authentication.services.js";
 import { JWT_SECRET } from "../../config.js";
+import { createAccount } from "../services/account.services.js";
 
 const signup = async (req, res, next) => {
     try {
@@ -18,8 +19,11 @@ const signup = async (req, res, next) => {
         const newUser = await createUser({ firstName, lastName, email, password: hashedPassword });
 
         if(newUser) {
+            const initialBalance = Math.floor(Math.random() * 1000) + 1;
+            const account = await createAccount(newUser._id, initialBalance);
+
             const token = generateToken(newUser, JWT_SECRET);
-            res.json({ message: "User created successfully", token });
+            res.json({ message: "User created successfully", account, token });
         }
         
     } catch(error) {
