@@ -1,11 +1,14 @@
 import express from "express";
-import { PORT } from "../config.js";
 import connectDB from "./db/index.js";
 import routes from "./routes/index.js";
+import cors from "cors";
+import { PORT } from "../config.js";
 
 const app = express();
 
 await connectDB();
+
+app.use(cors());
 
 app.use(express.json());
 

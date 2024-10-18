@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from "../services/user.services.js";
+import { createUser, getUserByEmail, updateUserInfo } from "../services/user.services.js";
 import { generateToken, hashPassword, verifyPassword } from "../services/authentication.services.js";
 import { JWT_SECRET } from "../../config.js";
 
@@ -16,8 +16,12 @@ const signup = async (req, res, next) => {
         const hashedPassword = await hashPassword(password);
     
         const newUser = await createUser({ firstName, lastName, email, password: hashedPassword });
-    
-        res.status(201).json({ firstName: newUser.firstName, email: newUser.email });
+
+        if(newUser) {
+            const token = generateToken(newUser, JWT_SECRET);
+            res.json({ message: "User created successfully", token });
+        }
+        
     } catch(error) {
         next(error);
     }
@@ -51,4 +55,23 @@ const signin = async (req, res, next) => {
     }
 }
 
-export { signup, signin };
+const updateProfile = async (req, res, next) => {
+    try {
+        const email = req.userEmail;
+        const updatedInfo = req.body;
+        const { password } = updatedInfo;
+
+        if(password) {
+            const hashedPassword = await hashPassword(password);
+            updatedInfo.password = hashedPassword;
+        }
+
+        await updateUserInfo(email, updatedInfo);
+
+        return res.send();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { signup, signin, updateProfile };

@@ -21,4 +21,9 @@ const generateToken = (user, secret) => {
     return token;
 }
 
-export { hashPassword, verifyPassword, generateToken };
+const verifyToken = (token, secret) => {
+    const decoded = jwt.verify(token, secret);
+    return decoded;
+}
+
+export { hashPassword, verifyPassword, generateToken, verifyToken };

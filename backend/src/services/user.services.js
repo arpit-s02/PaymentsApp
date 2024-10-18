@@ -10,4 +10,8 @@ const getUserByEmail = async (email) => {
     return user;
 }
 
-export { createUser, getUserByEmail };
+const updateUserInfo = async (email, updatedInfo) => {
+    await User.updateOne({ email }, updatedInfo);
+}
+
+export { createUser, getUserByEmail, updateUserInfo };

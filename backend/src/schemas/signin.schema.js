@@ -9,6 +9,6 @@ const signinSchema = z.object({
         required_error: "password is required",
         invalid_type_error: "password must be a string"
     })
-});
+}).strict();
 
 export default signinSchema;
