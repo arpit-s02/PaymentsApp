@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail, updateUserInfo } from "../services/user.services.js";
+import { createUser, filterUsers, getUserByEmail, updateUserInfo } from "../services/user.services.js";
 import { generateToken, hashPassword, verifyPassword } from "../services/authentication.services.js";
 import { JWT_SECRET } from "../../config.js";
 
@@ -74,4 +74,16 @@ const updateProfile = async (req, res, next) => {
     }
 }
 
-export { signup, signin, updateProfile };
+const searchUsers = async (req, res, next) => {
+    try {
+        const filter = req.query.filter || "";
+
+        const users = await filterUsers(filter);
+
+        return res.json({ users });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { signup, signin, updateProfile, searchUsers };

@@ -14,4 +14,29 @@ const updateUserInfo = async (email, updatedInfo) => {
     await User.updateOne({ email }, updatedInfo);
 }
 
-export { createUser, getUserByEmail, updateUserInfo };
+const filterUsers = async (filter) => {
+    const users = await User.find(
+        {
+            $or: [
+                {
+                    firstName: { $regex: filter, $options: "i" }
+                },
+                {
+                    lastName: { $regex: filter, $options: "i" }
+                },
+                {
+                    email: { $regex: filter, $options: "i" }
+                }
+            ]
+        },
+        {
+            firstName: true,
+            lastName: true,
+            email: true
+        }
+    );
+
+    return users;
+}
+
+export { createUser, getUserByEmail, updateUserInfo, filterUsers };
