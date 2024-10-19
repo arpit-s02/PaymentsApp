@@ -1,4 +1,4 @@
-import { getAccountByUserId } from "../services/account.services.js";
+import { getAccountByUserId, transferMoney } from "../services/account.services.js";
 import { getUserByEmail } from "../services/user.services.js";
 
 const getAccountBalance = async (req, res, next) => {
@@ -22,4 +22,20 @@ const getAccountBalance = async (req, res, next) => {
     }
 }
 
-export { getAccountBalance };
+const tranfer = async (req, res, next) => {
+    try {
+        const { receiverId, amount } = req.body;
+        const userEmail = req.userEmail;
+
+        const user = await getUserByEmail(userEmail);
+        const senderId = user._id;
+
+        await transferMoney(senderId, receiverId, amount);
+
+        return res.json({ message: "Transfer successful" });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { getAccountBalance, tranfer };
