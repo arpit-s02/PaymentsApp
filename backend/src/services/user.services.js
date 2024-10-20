@@ -14,15 +14,17 @@ const updateUserInfo = async (email, updatedInfo) => {
     await User.updateOne({ email }, updatedInfo);
 }
 
-const filterUsers = async (filter) => {
+const filterUsers = async (filter, email) => {
     const users = await User.find(
         {
             $or: [
                 {
-                    firstName: { $regex: filter, $options: "i" }
+                    firstName: { $regex: filter, $options: "i" },
+                    email: { $ne: email}
                 },
                 {
-                    lastName: { $regex: filter, $options: "i" }
+                    lastName: { $regex: filter, $options: "i" },
+                    email: { $ne: email}
                 }
             ]
         },

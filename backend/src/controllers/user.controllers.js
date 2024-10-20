@@ -80,9 +80,10 @@ const updateProfile = async (req, res, next) => {
 
 const searchUsers = async (req, res, next) => {
     try {
+        const { userEmail } = req;
         const filter = req.query.filter || "";
 
-        const users = await filterUsers(filter);
+        const users = await filterUsers(filter, userEmail);
 
         return res.json({ users });
     } catch (error) {
@@ -90,4 +91,16 @@ const searchUsers = async (req, res, next) => {
     }
 }
 
-export { signup, signin, updateProfile, searchUsers };
+const userDetails = async(req, res, next) => {
+    try {
+        const { userEmail } = req;
+
+        const { firstName, lastName, email } = await getUserByEmail(userEmail);
+
+        return res.json({ firstName, lastName, email });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { signup, signin, updateProfile, searchUsers, userDetails };
