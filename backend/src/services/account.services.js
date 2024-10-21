@@ -16,22 +16,16 @@ const transferMoney = async (senderId, receiverId, amount) => {
     session.startTransaction();
 
     try {
-        if(senderId.toString() === receiverId.toString()) {
-            const err = new Error("Sender and receiver are the same");
-            err.status = 400;
-            throw err;
-        }
-
         const senderAccount = await Account.findOne({ userId: senderId });
     
         if(!senderAccount) {
-            const err = new Error("Sender does not have an account");
+            const err = new Error("You do not have an account");
             err.status = 400;
             throw err;
         }
     
         else if(senderAccount.balance < amount) {
-            const err = new Error("Sender does not have enough balance");
+            const err = new Error("You do not have enough balance");
             err.status = 400;
             throw err;
         }

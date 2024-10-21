@@ -3,6 +3,7 @@ import connectDB from "./db/index.js";
 import routes from "./routes/index.js";
 import cors from "cors";
 import { PORT } from "../config.js";
+import startTransactionScheduler from "./schedulers/transactionScheduler.js";
 
 const app = express();
 
@@ -11,6 +12,8 @@ await connectDB();
 app.use(cors());
 
 app.use(express.json());
+
+startTransactionScheduler();
 
 app.use("/api/v1", routes);
 
