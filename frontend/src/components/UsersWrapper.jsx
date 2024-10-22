@@ -8,7 +8,12 @@ const UsersWrapper = ({ users }) => {
         <>
           {
             users.map(user => (
-              <UserItem key={user._id} name={`${user.firstName} ${user.lastName}`} letter={user.firstName[0]} />
+              <UserItem 
+                key={user._id} 
+                name={`${user.firstName} ${user.lastName}`} 
+                letter={user.firstName[0]} 
+                userId={user._id}
+              />
             ))
           }
         </>

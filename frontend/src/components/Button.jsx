@@ -1,10 +1,13 @@
-const Button = ({ children, disabled }) => {
+import Loader from "./Loader"
+
+/* eslint-disable react/prop-types */
+const Button = ({ children, loading }) => {
   return (
     <button 
-      disabled={disabled}
-      className="flex justify-center items-center h-12 mb-4 bg-black text-white w-full rounded"
+      disabled={loading}
+      className={`flex justify-center items-center h-12 bg-black text-white w-full rounded`}
     >
-      {children}
+      {loading ? <Loader fill="white"/> : children}
     </button>
   )
 }

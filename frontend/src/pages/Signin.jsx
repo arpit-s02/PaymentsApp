@@ -4,7 +4,6 @@ import Heading from "../components/Heading";
 import Subheading from "../components/Subheading";
 import Button from "../components/Button";
 import Warning from "../components/Warning";
-import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import config from "../../config.js";
 import axios from "axios";
@@ -92,19 +91,13 @@ const Signin = () => {
                 </div>
 
                 <footer className="w-full">
-                    {loading ? (
-                        <Button disabled={true}>
-                            <Loader fill={"white"} />
-                        </Button>
+                    <Button loading={loading}>Sign in</Button>
 
-                    ) : (
-                        <Button>Sign in</Button>
-                    )}
-                   <Warning 
+                    <Warning 
                         warning={"Don't have an account?"}
                         url="/signup"
                         label="Sign up"
-                   />
+                    />
                 </footer>
             </form>
         </div>
