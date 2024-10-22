@@ -1,7 +1,11 @@
 import Transaction from "../model/transaction.model.js";
 
 const getTransactionById = async (transactionId) => {
-    const transaction = await Transaction.findById(transactionId);
+    const transaction = await Transaction.findById(
+        transactionId,
+        { createdAt: false, updatedAt: false, __v: false }
+    );
+
     return transaction;
 }
 

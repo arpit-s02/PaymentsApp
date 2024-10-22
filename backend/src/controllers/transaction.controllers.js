@@ -1,4 +1,4 @@
-import { createTransaction } from "../services/transaction.services.js";
+import { createTransaction, getTransactionById } from "../services/transaction.services.js";
 import { getUserByEmail } from "../services/user.services.js";
 
 const newTransaction = async (req, res, next) => {
@@ -28,4 +28,17 @@ const newTransaction = async (req, res, next) => {
     }
 }
 
-export { newTransaction };
+const transactionDetails = async (req, res, next) => {
+    try {
+        const { transactionId } = req.query;
+
+        const transaction = await getTransactionById(transactionId);
+
+        return res.json(transaction);
+
+    } catch(error) {
+        next(error);
+    }
+}
+
+export { newTransaction, transactionDetails };
