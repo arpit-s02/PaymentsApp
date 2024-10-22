@@ -25,9 +25,9 @@ const getAccountBalance = async (req, res, next) => {
 
 
 const transfer = async (req, res, next) => {
-    try {
-        const { transactionId } = req.body;
-        
+    const { transactionId } = req.body;
+
+    try {        
         // get transaction using transactionId 
         const transaction = await getTransactionById(transactionId);
         
